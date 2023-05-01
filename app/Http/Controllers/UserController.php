@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use DB;
 
 class UserController extends Controller
 {
@@ -20,10 +21,9 @@ class UserController extends Controller
 
     public function signInOrSignUp(Request $request)
     {
-        $user = User::
-        where('lower(nome)', $request->nome)
-            ->where('lower(cognome)', $request->cognome)
-                ->where('lower(nome_utente)', $request->nomeUtente)
+        $user = User::where(DB::raw('lower(nome)'), strtolower($request->nome))
+            ->where(DB::raw('lower(cognome)'), strtolower($request->cognome))
+                ->where(DB::raw('lower(nome_utente)'), strtolower($request->nomeUtente))
                     ->first();
         if ($user != null) {
             return response()->json(['data' => new UserResource($user)], 200);
