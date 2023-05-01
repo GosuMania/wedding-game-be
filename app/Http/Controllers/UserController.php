@@ -7,20 +7,25 @@ use App\Resources\User\User as UserResource;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-Use Carbon\Carbon;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
 
     public function getAll()
     {
-        return UserResource::collection(User::orderBy('punteggio', 'ASC')->orderBy('date','ASC')->get());
+        return UserResource::collection(User::orderBy('punteggio', 'ASC')->orderBy('date', 'ASC')->get());
     }
 
     public function signInOrSignUp(Request $request)
     {
-        $user = User::whereRaw('LOWER(nome)', strtolower($request->nome))->whereRaw('LOWER(cognome)', strtolower($request->cognome))->whereRaw('LOWER(nome_utente)', strtolower($request->nomeUtente))->first();
-        if($user != null) {
+        $user = User::
+        whereRaw('LOWER(nome)', Str::lower($request->nome))
+            ->whereRaw('LOWER(cognome)', Str::lower($request->cognome))
+                ->whereRaw('LOWER(nome_utente)', Str::lower($request->nomeUtente))
+                    ->first();
+        if ($user != null) {
             return response()->json(['data' => new UserResource($user)], 200);
         } else {
             $user = User::updateOrCreate(
