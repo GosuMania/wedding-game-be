@@ -21,9 +21,9 @@ class UserController extends Controller
     public function signInOrSignUp(Request $request)
     {
         $user = User::
-        whereRaw('LOWER(nome)', $request->nome)
-            ->whereRaw('LOWER(cognome)', $request->cognome)
-                ->whereRaw('LOWER(nome_utente)', $request->nomeUtente)
+        whereRaw('lower(nome)', $request->nome)
+            ->whereRaw('lower(cognome)', $request->cognome)
+                ->whereRaw('lower(nome_utente)', $request->nomeUtente)
                     ->first();
         if ($user != null) {
             return response()->json(['data' => new UserResource($user)], 200);
