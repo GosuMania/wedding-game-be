@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('missions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_utente')->unsigned();
             $table->string('parola_cruciverba')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->dateTime('date');
         });
 
-        Schema::table('users', function ($table) {
+        Schema::table('missions', function ($table) {
             $table->foreign('id_utente')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('missions');
     }
 };
