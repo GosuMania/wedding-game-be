@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('selfie_sposo')->nullable();
             $table->boolean('brindisi')->default(false);
             $table->string('video_brindisi')->nullable();
-            $table->string('parola_jenga ')->nullable();
+            $table->string('parola_jenga')->nullable();
             $table->integer('punteggio')->default(0);
             $table->string('indovinello')->nullable();
             $table->dateTime('date');
