@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nome');
             $table->string('cognome');
             $table->string('nome_utente')->unique();
+            $table->integer('punteggio')->default(0);
             $table->dateTime('date');
         });
     }

@@ -18,6 +18,7 @@ class User extends JsonResource
             'nome' => $this->nome,
             'cognome' => $this->cognome,
             'nomeUtente' => $this->nome_utente,
+            'punteggio' => $this->punteggio,
             'date' => $this->date
         ];
     }

@@ -15,6 +15,7 @@ class User extends Model
         'nome',
         'cognome',
         'nome_utente',
+        'punteggio',
         'date'
     ];
 }

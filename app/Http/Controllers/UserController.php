@@ -29,6 +29,7 @@ class UserController extends Controller
                     'nome' => $request->nome,
                     'cognome' => $request->cognome,
                     'nome_utente' => $request->nomeUtente,
+                    'punteggio' => $request->punteggio,
                     'date' => Carbon::now(),
                 ]
             );
