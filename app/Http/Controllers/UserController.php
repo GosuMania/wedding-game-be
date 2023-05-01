@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Resources\User\User as UserResource;
 
-
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 Use Carbon\Carbon;
