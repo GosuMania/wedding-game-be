@@ -20,7 +20,7 @@ class UserController extends Controller
     public function signInOrSignUp(Request $request)
     {
         $user = User::where('nome', $request->nome)->where('cognome', $request->cognome)->where('nomeUtente', $request->nomeUtente);
-        if($user) {
+        if($user == null) {
             return response()->json(['data' => new UserResource($user)], 200);
         } else {
             $user = User::updateOrCreate(
