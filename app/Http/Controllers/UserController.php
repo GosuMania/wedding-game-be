@@ -42,7 +42,7 @@ class UserController extends Controller
                     'date' => Carbon::now()
                 ]
             );
-            $user['mission'] = $mission;
+            $user['mission'] = 'cazzo';
             return response()->json(['data' => new UserResource($user)], 200);
         } else {
             $user = User::updateOrCreate(
@@ -57,7 +57,7 @@ class UserController extends Controller
             );
             $mission = Mission::where('id_utente', $user['id'])->first();
             if($mission != null) {
-                $user['mission'] = $mission;
+                $user['mission'] = 'cesso';
                 return response()->json(['data' => new UserResource($user)], 200);
             } else {
                 $mission = Mission::updateOrCreate(
@@ -74,7 +74,7 @@ class UserController extends Controller
                         'date' => Carbon::now()
                     ]
                 );
-                $user['mission'] = $mission;
+                $user['mission'] = 'fessa';
                 return response()->json(['data' => new UserResource($user)], 200);
             }
 
