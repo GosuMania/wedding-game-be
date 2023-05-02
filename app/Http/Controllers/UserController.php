@@ -58,9 +58,8 @@ class UserController extends Controller
             $mission = Mission::where('id_utente', $user['id'])->first();
             if($mission == null) {
                 $mission = Mission::updateOrCreate(
-                    ['id' => $user->id],
+                    ['id_utente' => $user->id],
                     [
-                        'id_utente' => $user['id'],
                         'parola_cruciverba' => $request->mission['parolaCruciverba'],
                         'selfie_sposa' => $request->mission['selfieSposa'],
                         'selfie_sposo' => $request->mission['selfieSposo'],
