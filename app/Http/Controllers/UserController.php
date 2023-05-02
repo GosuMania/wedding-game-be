@@ -31,7 +31,6 @@ class UserController extends Controller
             $mission = Mission::where('id_utente', $user['id'])->first();
             if ($mission != null) {
                 $user['mission'] = $mission;
-                return response()->json(['data' => new UserResource($user)], 200);
             } else {
                 $missionNew = Mission::updateOrCreate(
                     ['id_utente' => $user['id']],
@@ -48,7 +47,6 @@ class UserController extends Controller
                     ]
                 );
                 $user['mission'] = $missionNew;
-                return response()->json(['data' => new UserResource($user)], 200);
             }
         } else {
             $userNew = User::updateOrCreate(
@@ -76,14 +74,34 @@ class UserController extends Controller
                 ]
             );
             $userNew['mission'] = $missionNew;
-            return response()->json(['data' => new UserResource($user)], 200);
-
         }
+        return response()->json(['data' => new UserResource($user)], 200);
     }
 
     public function getById($id)
     {
-        return new UserResource(User::findOrFail($id));
+        $user = User::where('id', $id)->first();
+        $mission = Mission::where('id_utente', $user['id'])->first();
+        if ($mission != null) {
+            $user['mission'] = $mission;
+        } else {
+            $missionNew = Mission::updateOrCreate(
+                ['id_utente' => $user['id']],
+                [
+                    'parola_cruciverba' => null,
+                    'selfie_sposa' => null,
+                    'selfie_sposo' => null,
+                    'brindisi' => false,
+                    'video_brindisi' => null,
+                    'parola_jenga' => null,
+                    'indovinello' => null,
+                    'punteggio' => 0,
+                    'date' => Carbon::now()
+                ]
+            );
+            $user['mission'] = $missionNew;
+        }
+        return new UserResource($user);
     }
 
     public function delete($id)

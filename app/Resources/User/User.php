@@ -20,7 +20,7 @@ class User extends JsonResource
             'cognome' => $this->cognome,
             'nomeUtente' => $this->nome_utente,
             'punteggio' => $this->punteggio,
-            'mission' => $this->mission,
+            'mission' => new MissionResource($this->mission),
             'date' => $this->date
         ];
     }
