@@ -28,9 +28,8 @@ class UserController extends Controller
             ->first();
         if ($user != null) {
             $mission = Mission::updateOrCreate(
-                ['id' => $user->id],
+                ['id_utente' => $user['id']],
                 [
-                    'id_utente' => $user['id'],
                     'parola_cruciverba' => null,
                     'selfie_sposa' => null,
                     'selfie_sposo' => null,
@@ -58,16 +57,16 @@ class UserController extends Controller
             $mission = Mission::where('id_utente', $user['id'])->first();
             if($mission == null) {
                 $mission = Mission::updateOrCreate(
-                    ['id_utente' => $user->id],
+                    ['id_utente' => $user['id']],
                     [
-                        'parola_cruciverba' => $request->mission['parolaCruciverba'],
-                        'selfie_sposa' => $request->mission['selfieSposa'],
-                        'selfie_sposo' => $request->mission['selfieSposo'],
-                        'brindisi' => $request->mission['brindisi'],
-                        'video_brindisi' => $request->mission['videoBrindisi'],
-                        'parola_jenga' => $request->mission['parolaJenga'],
-                        'indovinello' => $request->mission['indovinello'],
-                        'punteggio' => $request->mission['punteggio'],
+                        'parola_cruciverba' => null,
+                        'selfie_sposa' => null,
+                        'selfie_sposo' => null,
+                        'brindisi' => false,
+                        'video_brindisi' => null,
+                        'parola_jenga' => null,
+                        'indovinello' => null,
+                        'punteggio' => 0,
                         'date' => Carbon::now()
                     ]
                 );
