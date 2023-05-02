@@ -28,39 +28,12 @@ class UserController extends Controller
             ->where(DB::raw('lower(nome_utente)'), strtolower($request->nomeUtente))
             ->first();
         if ($user != null) {
-            $mission = Mission::updateOrCreate(
-                ['id_utente' => $user['id']],
-                [
-                    'parola_cruciverba' => null,
-                    'selfie_sposa' => null,
-                    'selfie_sposo' => null,
-                    'brindisi' => false,
-                    'video_brindisi' => null,
-                    'parola_jenga' => null,
-                    'indovinello' => null,
-                    'punteggio' => 0,
-                    'date' => Carbon::now()
-                ]
-            );
-            $user['mission'] = new MissionResource($mission);
-            return response()->json(['data' => new UserResource($user)], 200);
-        } else {
-            $user = User::updateOrCreate(
-                ['id' => $request->id],
-                [
-                    'nome' => $request->nome,
-                    'cognome' => $request->cognome,
-                    'nome_utente' => $request->nomeUtente,
-                    'punteggio' => $request->punteggio,
-                    'date' => Carbon::now(),
-                ]
-            );
             $mission = Mission::where('id_utente', $user['id'])->first();
-            if($mission != null) {
-                $user['mission'] = new MissionResource($mission);
+            if ($mission != null) {
+                $user['mission'] = $mission;
                 return response()->json(['data' => new UserResource($user)], 200);
             } else {
-                $mission = Mission::updateOrCreate(
+                $missionNew = Mission::updateOrCreate(
                     ['id_utente' => $user['id']],
                     [
                         'parola_cruciverba' => null,
@@ -74,9 +47,36 @@ class UserController extends Controller
                         'date' => Carbon::now()
                     ]
                 );
-                $user['mission'] = new MissionResource($mission);
+                $user['mission'] = $missionNew;
                 return response()->json(['data' => new UserResource($user)], 200);
             }
+        } else {
+            $userNew = User::updateOrCreate(
+                ['id' => $request->id],
+                [
+                    'nome' => $request->nome,
+                    'cognome' => $request->cognome,
+                    'nome_utente' => $request->nomeUtente,
+                    'punteggio' => $request->punteggio,
+                    'date' => Carbon::now(),
+                ]
+            );
+            $missionNew = Mission::updateOrCreate(
+                ['id_utente' => $userNew['id']],
+                [
+                    'parola_cruciverba' => null,
+                    'selfie_sposa' => null,
+                    'selfie_sposo' => null,
+                    'brindisi' => false,
+                    'video_brindisi' => null,
+                    'parola_jenga' => null,
+                    'indovinello' => null,
+                    'punteggio' => 0,
+                    'date' => Carbon::now()
+                ]
+            );
+            $userNew['mission'] = $missionNew;
+            return response()->json(['data' => new UserResource($user)], 200);
 
         }
     }
