@@ -2,6 +2,7 @@
 
 namespace App\Resources\User;
 
+use App\Resources\Mission\Mission as MissionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 class User extends JsonResource
 {
@@ -19,7 +20,7 @@ class User extends JsonResource
             'cognome' => $this->cognome,
             'nomeUtente' => $this->nome_utente,
             'punteggio' => $this->punteggio,
-            'mission' => $this->mission,
+            'mission' => new MissionResource($this->mission),
             'date' => $this->date
         ];
     }

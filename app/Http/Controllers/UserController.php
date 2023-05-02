@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mission;
 use App\Resources\User\User as UserResource;
+use App\Resources\Mission\Mission as MissionResource;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
