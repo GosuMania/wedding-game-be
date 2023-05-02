@@ -55,7 +55,10 @@ class UserController extends Controller
                 ]
             );
             $mission = Mission::where('id_utente', $user['id'])->first();
-            if($mission == null) {
+            if($mission != null) {
+                $user['mission'] = $mission;
+                return response()->json(['data' => new UserResource($user)], 200);
+            } else {
                 $mission = Mission::updateOrCreate(
                     ['id_utente' => $user['id']],
                     [
@@ -70,9 +73,10 @@ class UserController extends Controller
                         'date' => Carbon::now()
                     ]
                 );
+                $user['mission'] = $mission;
+                return response()->json(['data' => new UserResource($user)], 200);
             }
-            $user['mission'] = $mission;
-            return response()->json(['data' => new UserResource($user)], 200);
+
         }
     }
 
