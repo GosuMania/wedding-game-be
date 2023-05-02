@@ -55,7 +55,7 @@ class MissionController extends Controller
 
     public function calcPoints(Request $request) {
         $points = 0;
-        if(strtolower($request->parolaCruciverba) == 'complicità' || 'complicita') {
+        if(strtolower($request->parolaCruciverba) == 'complicità' || strtolower($request->parolaCruciverba) == 'complicita') {
             $points = $points + 20;
         }
 
@@ -75,7 +75,7 @@ class MissionController extends Controller
             $points = $points + 30;
         }
 
-        if(strtolower($request->parolaJenga) == 'burraco' || strtolower($request->parolaJenga) == 'buracco') {
+        if(strtolower($request->indovinello) == 'burraco' || strtolower($request->indovinello) == 'buracco') {
             $points = $points + 25;
         }
 
