@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mission;
 use App\Http\Controllers\Controller;
 use App\Resources\Mission\Mission as MissionResource;
-use App\Resources\User\User;
+use App\Models\User ;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use stdClass;
@@ -49,7 +49,7 @@ class MissionController extends Controller
         );
         $user = User::where('id', $request->idUtente)->update(['punteggio' => $points]);
         $user['mission'] = $mission;
-        return response()->json(['data' => new UserResources($user)], 200);
+        return response()->json(['data' => new UserResource($user)], 200);
     }
 
     public function calcPoints(Request $request) {
