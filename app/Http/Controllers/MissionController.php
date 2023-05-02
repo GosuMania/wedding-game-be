@@ -48,6 +48,11 @@ class MissionController extends Controller
         return response()->json(['data' => new MissionResource($object)], 200);
     }
 
+    public function getByIdUser($id)
+    {
+        return new MissionResource(Mission::where('id_utente', $id));
+    }
+
     public function delete($id)
     {
         $product = Mission::where('id', $id)->first();

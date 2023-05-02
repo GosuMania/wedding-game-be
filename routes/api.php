@@ -18,6 +18,7 @@ Route::controller(MissionController::class)->prefix('mission')->group(function (
     Route::get('get-all', 'getAll'); // restituisce la lista
     Route::post('create-or-update', 'signInOrSignUp'); // crea o modifica
     Route::get('get-by-id/{id}', 'getById'); // restituisce una specifica
+    Route::get('get-by-id-user/{id}', 'getByIdUser'); // restituisce una specifica
     Route::delete('delete/{id}', 'delete'); // elimina
 });
 
