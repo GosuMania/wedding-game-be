@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Mission;
 use App\Http\Controllers\Controller;
 use App\Resources\Mission\Mission as MissionResource;
+use App\Resources\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use stdClass;
 use function Webmozart\Assert\Tests\StaticAnalysis\length;
+use App\Resources\User\User as UserResource;
 
 class MissionController extends Controller
 {
@@ -29,23 +31,54 @@ class MissionController extends Controller
      */
     public function createOrUpdate(Request $request)
     {
-        $object = Mission::updateOrCreate(
+        $points = $this->calcPoints($request);
+        $mission = Mission::updateOrCreate(
             ['id' => $request->id],
             [
                 'id_utente' => $request->idUtente,
                 'parola_cruciverba' => $request->parolaCruciverba,
                 'selfie_sposa' => $request->selfieSposa,
-                'selfie_sposo'=> $request->selfieSposo,
+                'selfie_sposo' => $request->selfieSposo,
                 'brindisi' => $request->brindisi,
                 'video_brindisi' => $request->videoBrindisi,
                 'parola_jenga' => $request->parolaJenga,
                 'indovinello' => $request->indovinello,
-                'punteggio' => $request->punteggio,
+                'punteggio' => $points,
                 'date' => Carbon::now()
             ]
         );
+        $user = User::where('id', $request->idUtente)->update(['punteggio' => $points]);
+        $user['mission'] = $mission;
+        return response()->json(['data' => new UserResources($user)], 200);
+    }
 
-        return response()->json(['data' => new MissionResource($object)], 200);
+    public function calcPoints(Request $request) {
+        $points = 0;
+        if(strtolower($request->parolaCruciverba) == 'complicità' || 'complicita') {
+            $points = $points + 20;
+        }
+
+        if($request->selfieSposa != null) {
+            $points = $points + 25;
+        }
+
+        if($request->selfieSposo != null) {
+            $points = $points + 25;
+        }
+
+        if($request->brindisi) {
+            $points = $points + 30;
+        }
+
+        if(strtolower($request->parolaJenga) == 'divertimento') {
+            $points = $points + 30;
+        }
+
+        if(strtolower($request->parolaJenga) == 'burraco' || strtolower($request->parolaJenga) == 'buracco') {
+            $points = $points + 25;
+        }
+
+        return $points;
     }
 
     public function getByIdUser($id)
