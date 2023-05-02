@@ -47,7 +47,8 @@ class MissionController extends Controller
                 'date' => Carbon::now()
             ]
         );
-        $user = User::where('id', $request->idUtente)->update(['punteggio' => $points])->first();
+        User::where('id', $request->idUtente)->update(['punteggio' => $points]);
+        $user = User::where('id', $request->idUtente)->first();
         $user['mission'] = $mission;
         return response()->json(['data' => new UserResource($user)], 200);
     }
