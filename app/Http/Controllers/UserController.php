@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mission;
 use App\Resources\User\User as UserResource;
 
 use App\Http\Controllers\Controller;
@@ -23,9 +24,25 @@ class UserController extends Controller
     {
         $user = User::where(DB::raw('lower(nome)'), strtolower($request->nome))
             ->where(DB::raw('lower(cognome)'), strtolower($request->cognome))
-                ->where(DB::raw('lower(nome_utente)'), strtolower($request->nomeUtente))
-                    ->first();
+            ->where(DB::raw('lower(nome_utente)'), strtolower($request->nomeUtente))
+            ->first();
         if ($user != null) {
+            $mission = Mission::updateOrCreate(
+                ['id' => $user->id],
+                [
+                    'id_utente' => $user['id'],
+                    'parola_cruciverba' => null,
+                    'selfie_sposa' => null,
+                    'selfie_sposo' => null,
+                    'brindisi' => false,
+                    'video_brindisi' => null,
+                    'parola_jenga' => null,
+                    'indovinello' => null,
+                    'punteggio' => 0,
+                    'date' => Carbon::now()
+                ]
+            );
+            $user['mission'] = $mission;
             return response()->json(['data' => new UserResource($user)], 200);
         } else {
             $user = User::updateOrCreate(
@@ -38,6 +55,25 @@ class UserController extends Controller
                     'date' => Carbon::now(),
                 ]
             );
+            $mission = Mission::where('id_utente', $user['id'])->first();
+            if($mission == null) {
+                $mission = Mission::updateOrCreate(
+                    ['id' => $user->id],
+                    [
+                        'id_utente' => $user['id'],
+                        'parola_cruciverba' => $request->mission['parolaCruciverba'],
+                        'selfie_sposa' => $request->mission['selfieSposa'],
+                        'selfie_sposo' => $request->mission['selfieSposo'],
+                        'brindisi' => $request->mission['brindisi'],
+                        'video_brindisi' => $request->mission['videoBrindisi'],
+                        'parola_jenga' => $request->mission['parolaJenga'],
+                        'indovinello' => $request->mission['indovinello'],
+                        'punteggio' => $request->mission['punteggio'],
+                        'date' => Carbon::now()
+                    ]
+                );
+            }
+            $user['mission'] = $mission;
             return response()->json(['data' => new UserResource($user)], 200);
         }
     }
