@@ -36,9 +36,9 @@ class ImageController extends Controller
             return response()->json(['error' => 'Perfavore inserisci un immagine.'], 401);
         } else {
             try {
-                $image = $request->file('video');
-                $path = $image->storePubliclyAs(
-                    '', Carbon::now()->timestamp.'.'.$image->getClientOriginalExtension(), 'videos'
+                $video = $request->file('video');
+                $path = $video->storePubliclyAs(
+                    '', Carbon::now()->timestamp.'.'.$video->getClientOriginalExtension(), 'videos'
                 );
                 Image::create([
                     'link' => env('APP_URL').'/videos/'.$path,
