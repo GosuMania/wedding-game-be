@@ -29,4 +29,25 @@ class ImageController extends Controller
         }
 
     }
+
+    public function uploadVideo(Request $request)
+    {
+        if (!$request->hasFile('video') && !$request->file('video')->isValid()) {
+            return response()->json(['error' => 'Perfavore inserisci un immagine.'], 401);
+        } else {
+            try {
+                $image = $request->file('video');
+                $path = $image->storePubliclyAs(
+                    '', Carbon::now()->timestamp.'.'.$image->getClientOriginalExtension(), 'videos'
+                );
+                Image::create([
+                    'link' => env('APP_URL').'/videos/'.$path,
+                ]);
+                return response()->json(env('APP_URL').'/videos/'.$path, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            } catch (Exception $e) {
+                return response()->json($e);
+            }
+        }
+
+    }
 }

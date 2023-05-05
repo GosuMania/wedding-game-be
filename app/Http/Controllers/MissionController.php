@@ -67,8 +67,8 @@ class MissionController extends Controller
             $points = $points + 25;
         }
 
-        if($request->brindisi) {
-            $points = $points + 30;
+        if($request->videoBrindisi != null) {
+            $points = $points + 40;
         }
 
         if(strtolower($request->parolaJenga) == 'divertimento') {
