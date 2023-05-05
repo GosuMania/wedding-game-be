@@ -16,6 +16,12 @@ class User extends Model
         'cognome',
         'nome_utente',
         'punteggio',
+        'id_mission',
         'date'
     ];
+
+    public function toolUser()
+    {
+        return $this->belongsTo(Mission::class, 'id_mission'); // appartiene a
+    }
 }

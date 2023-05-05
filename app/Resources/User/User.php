@@ -24,4 +24,8 @@ class User extends JsonResource
             'date' => $this->date
         ];
     }
+
+    public function mission() {
+
+    }
 }
