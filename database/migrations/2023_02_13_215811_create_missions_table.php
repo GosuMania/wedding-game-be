@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_utente')->unsigned();
             $table->string('parola_cruciverba')->nullable();
             $table->string('selfie_sposa')->nullable();
             $table->string('selfie_sposo')->nullable();
@@ -27,9 +26,6 @@ return new class extends Migration
             $table->dateTime('date');
         });
 
-        Schema::table('missions', function ($table) {
-            $table->foreign('id_utente')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        });
     }
 
     /**

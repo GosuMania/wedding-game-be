@@ -12,7 +12,6 @@ class Mission extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_utente',
         'parola_cruciverba',
         'selfie_sposa',
         'selfie_sposo',
@@ -23,9 +22,4 @@ class Mission extends Model
         'punteggio',
         'date'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_utente'); // appartiene a
-    }
 }

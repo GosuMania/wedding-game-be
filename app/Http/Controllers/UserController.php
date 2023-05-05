@@ -30,19 +30,7 @@ class UserController extends Controller
         if ($user != null) {
             return response()->json(['data' => new UserResource($user)], 200);
         } else {
-            $user = User::updateOrCreate(
-                ['id' => $request->id],
-                [
-                    'nome' => $request->nome,
-                    'cognome' => $request->cognome,
-                    'nome_utente' => $request->nomeUtente,
-                    'punteggio' => $request->punteggio,
-                    'id_mission' => null,
-                    'date' => Carbon::now()
-                ]
-            );
-            $missionNew = Mission::updateOrCreate(
-                ['id_utente' => $user['id']],
+            $missionNew = Mission::create(
                 [
                     'parola_cruciverba' => null,
                     'selfie_sposa' => null,
@@ -73,26 +61,6 @@ class UserController extends Controller
     public function getById($id)
     {
         $user = User::where('id', $id)->first();
-        $mission = Mission::where('id_utente', $user['id'])->first();
-        if ($mission != null) {
-            $user['mission'] = $mission;
-        } else {
-            $missionNew = Mission::updateOrCreate(
-                ['id_utente' => $user['id']],
-                [
-                    'parola_cruciverba' => null,
-                    'selfie_sposa' => null,
-                    'selfie_sposo' => null,
-                    'brindisi' => false,
-                    'video_brindisi' => null,
-                    'parola_jenga' => null,
-                    'indovinello' => null,
-                    'punteggio' => 0,
-                    'date' => Carbon::now()
-                ]
-            );
-            $user['mission'] = $missionNew;
-        }
         return new UserResource($user);
     }
 

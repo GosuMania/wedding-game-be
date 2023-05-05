@@ -18,8 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('nome');
             $table->string('cognome');
             $table->string('nome_utente')->unique();
+            $table->bigInteger('id_mission')->unsigned();
             $table->integer('punteggio')->default(0);
             $table->dateTime('date');
+        });
+
+
+        Schema::table('users', function ($table) {
+            $table->foreign('id_mission')->references('id')->on('missions')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

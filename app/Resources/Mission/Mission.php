@@ -16,7 +16,6 @@ class Mission extends JsonResource
     {
         return [
             'id' => $this->id,
-            'idUtente' => $this->id_utente,
             'parolaCruciverba' => $this->parola_cruciverba,
             'selfieSposa' => $this->selfie_sposa,
             'selfieSposo' => $this->selfie_sposo,
