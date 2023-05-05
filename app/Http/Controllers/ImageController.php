@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class ImageProductController extends Controller
+class ImageController extends Controller
 {
     public function upload(Request $request)
     {
