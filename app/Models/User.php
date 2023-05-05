@@ -20,7 +20,7 @@ class User extends Model
         'date'
     ];
 
-    public function toolUser()
+    public function mission()
     {
         return $this->belongsTo(Mission::class, 'id_mission'); // appartiene a
     }
