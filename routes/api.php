@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\ImageController;
-
+use App\Http\Controllers\TimeController;
 
 Route::controller(UserController::class)->prefix('user')->group(function () {
     Route::get('get-all', 'getAll'); // restituisce la lista
@@ -26,8 +26,10 @@ Route::controller(ImageController::class)->prefix('image')->group(function () {
     Route::post('upload', 'upload'); // restituisce la lista
     Route::post('upload-video', 'uploadVideo'); // restituisce la lista
     Route::get('get-all', 'getAll'); // restituisce la lista
+});
 
-
+Route::controller(TimeController::class)->prefix('time')->group(function () {
+    Route::get('get-time', 'getTime'); // restituisce la lista
 });
 
 
