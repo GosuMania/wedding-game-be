@@ -68,15 +68,15 @@ class MissionController extends Controller
         }
 
         if($request->videoBrindisi != null) {
-            $points = $points + 40;
-        }
-
-        if(strtolower($request->parolaJenga) == 'divertimento') {
             $points = $points + 30;
         }
 
+        if(strtolower($request->parolaJenga) == '110623') {
+            $points = $points + 20;
+        }
+
         if(strtolower($request->indovinello) == 'burraco' || strtolower($request->indovinello) == 'buracco') {
-            $points = $points + 25;
+            $points = $points + 20;
         }
 
         return $points;
