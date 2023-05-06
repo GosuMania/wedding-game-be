@@ -25,6 +25,7 @@ Route::controller(MissionController::class)->prefix('mission')->group(function (
 Route::controller(ImageController::class)->prefix('image')->group(function () {
     Route::post('upload', 'upload'); // restituisce la lista
     Route::post('upload-video', 'uploadVideo'); // restituisce la lista
+    Route::get('get-all', 'getAll'); // restituisce la lista
 
 
 });

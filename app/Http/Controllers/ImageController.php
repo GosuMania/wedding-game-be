@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Http\Controllers\Controller;
+use App\Models\Mission;
+use App\Resources\Mission\Mission as MissionResource;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class ImageController extends Controller
 {
+    public function getAll()
+    {
+        return Image::orderBy('id', 'ASC')->get();
+    }
+
     public function upload(Request $request)
     {
         if (!$request->hasFile('image') && !$request->file('image')->isValid()) {
